@@ -1,4 +1,5 @@
 using ControleEstoque.API.Data;
+using ControleEstoque.API.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(opt=>
 opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
+//registra o serviço usando ciclo de vida Scoped, ou seja, uma nova instância será criada para cada solicitação HTTP
+builder.Services.AddScoped<IPedidoService, PedidoService>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
